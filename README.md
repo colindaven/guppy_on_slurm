@@ -20,7 +20,7 @@ Warning: only tested on Ubuntu 16.04 to date
   
   bash batch_split_to_subdirs.sh
 
-6. Run guppy
+6. Run guppy to submit a 24 core job (default) for each subdir directory concurrently.
   
   bash runbatch_guppy.sh
   
