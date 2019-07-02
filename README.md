@@ -24,4 +24,5 @@ Warning: only tested on Ubuntu 16.04 to date
 7. Finally, gather FASTQ data
   find exec cat. Warning - needs to write output into a directory above the find, eg 
   using ../ for the output file, otherwise creates an infinite loop. 
+  
   `srun find . -name "*.fastq" -exec cat {} > ../guppy_part1.fastq \; &`
