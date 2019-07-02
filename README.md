@@ -12,17 +12,14 @@ Warning: only tested on Ubuntu 16.04 to date
 
 3. Copy the BASH scripts into the directory containing your reads
 
-4. Make sure the Guppy software from ONT is installed and in your PATH
-
-  guppy_basecaller
+4. Make sure the Guppy software from ONT is installed and in your PATH. This should provide program usage:
+  `guppy_basecaller`
 
 5. Split FAST5 files into batches for cluster
-  
-  `bash batch_split_to_subdirs.sh`
+    `bash batch_split_to_subdirs.sh`
 
 6. Run guppy to submit a 24 core job (default) for each subdir directory concurrently.
-  
-  `bash runbatch_guppy.sh`
+   `bash runbatch_guppy.sh`
   
 7. Finally, gather FASTQ data
   find exec cat. Warning - needs to write output into a directory above the find, eg 
