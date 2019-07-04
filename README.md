@@ -12,10 +12,10 @@ Warning: only tested on Ubuntu 16.04 to date
 
 3. Copy the BASH scripts into the directory containing your reads
 
-4. Make sure the Guppy software from ONT is installed and in your PATH. This should provide program usage:
+4. Make sure the Guppy software from ONT is installed and in your PATH. This following command should provide program usage:
   `guppy_basecaller`
 
-5. Split FAST5 files into batches for cluster
+5. Split FAST5 files into batches for cluster. You may/will need to optimize batch size depending on your run and server hardware to get optimal runtimes. 
     `bash batch_split_to_subdirs.sh`
 
 6. Run guppy to submit a 24 core job (default) for each subdir directory concurrently.
