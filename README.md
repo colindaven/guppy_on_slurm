@@ -8,9 +8,11 @@ Warning: only tested on Ubuntu 16.04 to date
 
 1. Clone the repository
 
-2. Edit the `run_guppy_SLURM.sh` script with your local SLURM a) queue b) cpus etc
+2. Edit the `run_guppy_SLURM.sh` script with your local SLURM 
+  - a) queue / partition
+  - b) cpus (Go easy on your HPC. Request 10 HPC cores if you're going to run guppy on 8 cores). 
 
-3. Copy the BASH scripts into the directory containing your reads
+3. Copy the bash scripts into the directory containing your reads
 
 4. Make sure the Guppy software from ONT is installed and in your PATH. This following command should provide program usage:
   `guppy_basecaller`
