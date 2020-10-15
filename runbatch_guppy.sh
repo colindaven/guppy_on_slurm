@@ -7,7 +7,7 @@
 for i in $(ls -d subdir*)
 
         do
-	sbatch -c 24 run_guppy_SLURM.sh $i
+	sbatch -c 10 run_guppy_SLURM.sh $i
 
 
 done

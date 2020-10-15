@@ -7,9 +7,8 @@
 # set run on x MB node only
 #SBATCH --mem 40000
 
-cpus=24
 # set run on bigmem node only
-#SBATCH --cpus-per-task 24
+#SBATCH --cpus-per-task 8
 
 # share node
 #SBATCH --share
@@ -28,9 +27,7 @@ cpus=24
 
 echo "Input directory: " $1
 i=$1
-
-# Activate env on cluster node if needed
-# conda activate
+cpus=8
 
 
 ### Run command - directory

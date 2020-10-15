@@ -2,9 +2,9 @@
 Splitting and accelerating the Oxford Nanopore basecaller guppy using SLURM 
 
 
-Dr. Colin Davenport, June 2019
+Dr. Colin Davenport, June 2019 - Oct 2020
 
-Warning: only tested on Ubuntu 16.04 to date
+Warning: only tested on Ubuntu 16.04 to date. Guppy works fine on Ubuntu 20.04, use a singularity container.
 
 1. Clone the repository
 
@@ -15,12 +15,15 @@ Warning: only tested on Ubuntu 16.04 to date
 3. Copy the bash scripts into the directory containing your reads
 
 4. Make sure the Guppy software from ONT is installed and in your PATH. This following command should provide program usage:
+
   `guppy_basecaller`
 
 5. Split FAST5 files into batches for cluster using the bash script. You may/will need to optimize batch size depending on your run and server hardware to get optimal runtimes. 
+
     `bash batch_split_to_subdirs.sh`
 
-6. Run guppy to submit a 24 core job (default) for each subdir directory concurrently.
+6. Run guppy to submit a 8 core job (default) for each subdir directory concurrently.
+
    `bash runbatch_guppy.sh`
   
 7. Finally, gather FASTQ data. Warning: This will combine barcodes, good, bad reads together into one file so might only be appropriate for those doing one sample per flowcell !
