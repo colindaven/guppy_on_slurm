@@ -31,3 +31,6 @@ Warning: only tested on Ubuntu 16.04 to date. Guppy works fine on Ubuntu 20.04, 
   using ../x.fastq for the output file, otherwise creates an infinite loop. 
   
   `srun find . -name "*.fastq" -exec cat {} > ../guppy_part1.fastq \; &`
+
+
+Done
