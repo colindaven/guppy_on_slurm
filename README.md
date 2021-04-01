@@ -24,8 +24,7 @@ Warning: only tested on Ubuntu 16.04 and 20.04 to date. Guppy works fine on Ubun
     `bash batch_split_to_subdirs.sh`
 
 6. Run guppy to submit a 8 core job (default) for each subdir directory concurrently.
-
-   `bash runbatch_guppy.sh`
+`runbatch_singularity_guppy.sh` (preferred) or   `bash runbatch_guppy.sh`
   
 7. Finally, gather FASTQ data. Warning: This will combine barcodes, good, bad reads together into one file so might only be appropriate for those doing one sample per flowcell !
   find exec cat. Warning - needs to write output into a directory above the find, eg 
