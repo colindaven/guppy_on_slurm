@@ -7,6 +7,10 @@ Dr. Colin Davenport, June 2019 - Feb 2021
 
 Warning: only tested on Ubuntu 16.04 and 20.04 to date. Guppy works fine on Ubuntu 20.04, use a singularity container.
 
+Requirements
+ * either a working guppy_basecaller (the command `guppy_basecaller` should provide output) 
+ * or a singularity container with guppy_basecaller installed in it.
+
 1. Clone the repository
 
 2. Edit the `run_guppy_SLURM.sh` script with your local SLURM 
