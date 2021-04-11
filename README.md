@@ -11,6 +11,8 @@ Requirements
  * either a working guppy_basecaller (the command `guppy_basecaller` should provide output) 
  * or a singularity container with guppy_basecaller installed in it.
 
+Howto: 
+
 1. Clone the repository
 
 2. Edit the `run_guppy_SLURM.sh` script with your local SLURM 
