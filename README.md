@@ -1,6 +1,6 @@
 # guppy_on_slurm
-Splitting and accelerating the Oxford Nanopore basecaller guppy using SLURM.
-These scripts move FAST5s into subdirectories, then run guppy on each subdirectory independently using a SLURM cluster.
+Splitting and accelerating the Oxford Nanopore CPU basecaller guppy using SLURM.
+These scripts move FAST5s into subdirectories, then run CPU guppy on each subdirectory independently using a SLURM cluster.
 
 
 Dr. Colin Davenport, June 2019 - Feb 2021
@@ -8,8 +8,8 @@ Dr. Colin Davenport, June 2019 - Feb 2021
 Warning: only tested on Ubuntu 16.04 and 20.04 to date. Guppy works fine on Ubuntu 20.04, use a singularity container.
 
 Requirements
- * either a working guppy_basecaller (the command `guppy_basecaller` should provide output) 
- * or a singularity container with guppy_basecaller installed in it.
+ * either a working guppy CPU guppy_basecaller (the command `guppy_basecaller` should provide output) 
+ * or a singularity guppy CPU container with guppy_basecaller installed in it.
 
 Howto: 
 
