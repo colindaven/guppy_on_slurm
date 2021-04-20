@@ -32,11 +32,11 @@ Howto:
 6. Run guppy to submit a 8 core job (default) for each subdir directory concurrently.
 `runbatch_singularity_guppy.sh` (preferred) or   `bash runbatch_guppy.sh`
   
-7. Finally, gather FASTQ data. Warning: This will combine barcodes, good, bad reads together into one file so might only be appropriate for those doing one sample per flowcell !
+7. Finally, gather FASTQ data. Warning: This will combine barcodes, and all pass (but not fail) reads together into one file so might only be appropriate for those doing one sample per flowcell !
   find exec cat. Warning - needs to write output into a directory above the find, eg 
   using ../x.fastq for the output file, otherwise creates an infinite loop. 
   
-  `srun find . -name "*.fastq" -exec cat {} > ../guppy_part1.fastq \; &`
+  `srun find *.guppy/pass -name "*.fastq" -exec cat {} > ../guppy_part1.fastq \; &`
 
 
 Done
