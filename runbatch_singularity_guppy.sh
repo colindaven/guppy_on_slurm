@@ -1,18 +1,17 @@
 #!/bin/bash
-## Colin Davenport, July 2020 -  Jan 2021
+## Colin Davenport, July 2020 -  May 2021
 # Note - singularity does NOT work with sbatch, but does with srun. Therefore no additional sbatch script needed.
 # See guppy page on Dokuwiki for full usage
 # Now optionally uses Singularity - needed on 20.04 cluster
 # This version uses config and models from bonito/rerio - see bottom
 
-# For 4000 fast5 per folder options (pre 2019_03)
-#for i in $(ls -d *sequenc*)
 # For large multi-fast5 files (after 2019_03)
 
-
-# use Singularity container version of guppy
+# use Singularity container version of guppy (just a file so can be used by an entire cluster if on an NFS filesystem)
+# build a Singularity container from docker: singularity build guppy453.sif docker://genomicpariscentre/guppy
 #guppy_basecaller="singularity exec /mnt/ngsnfs/tools/guppy/guppy361.sif guppy_basecaller"
-guppy_basecaller="singularity exec /mnt/ngsnfs/tools/guppy/guppy440.sif guppy_basecaller"
+#guppy_basecaller="singularity exec /mnt/ngsnfs/tools/guppy/guppy440.sif guppy_basecaller"
+guppy_basecaller="singularity exec /mnt/ngsnfs/tools/guppy/guppy453.sif guppy_basecaller"
 
 # use standard guppy - not recommended
 #guppy_basecaller=guppy_basecaller
