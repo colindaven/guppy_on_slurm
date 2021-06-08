@@ -13,7 +13,8 @@
 # Optional: build Sing container from docker container with: singularity build guppy453.sif docker://genomicpariscentre/guppy
 #guppy_basecaller="singularity exec /mnt/ngsnfs/tools/guppy/guppy361.sif guppy_basecaller"
 #guppy_basecaller="singularity exec /mnt/ngsnfs/tools/guppy/guppy440.sif guppy_basecaller"
-guppy_basecaller="singularity exec /mnt/ngsnfs/tools/guppy/guppy453.sif guppy_basecaller"
+#guppy_basecaller="singularity exec /mnt/ngsnfs/tools/guppy/guppy453.sif guppy_basecaller"
+guppy_basecaller="singularity exec /mnt/ngsnfs/tools/guppy/guppy507.sif guppy_basecaller"
 
 # use standard guppy if desired
 #guppy_basecaller=guppy_basecaller
@@ -46,6 +47,8 @@ for i in $(ls -d subdir*)
     ##############
     # slow, higher accuracy mode
     ##############
+
+	## WARNING - not tested with version 507 yet. Super accuracy available TODO
 
 	# high accuracy, 7x + slower 
 	srun -c $reservedCpus $settings $guppy_basecaller -i $i  -s $i.guppy --cpu_threads_per_caller 1 --num_callers $cpus -c $config -m $model &
