@@ -37,7 +37,8 @@ i=$1
 	cpus=8
 	queue="lowprio"
 	settings="-p $queue -J guppy_sing --mem=20000"
-	gpu_params='--compress_fastq --num_callers 14 --gpu_runners_per_device 8 --chunks_per_runner 768 --chunk_size 500'
+	# for nvidia A100, 40GB ram
+	gpu_params='--compress_fastq --num_callers 14 --gpu_runners_per_device 8 --chunks_per_runner 512 --chunk_size 3000'
 	out_dir="guppy_out"
 
 
