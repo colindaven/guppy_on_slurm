@@ -1,5 +1,5 @@
 #!/bin/bash
-# Colin Davenport, July 2020 -  June 2021
+# Colin Davenport, July 2020 -  August 2021
 # This version uses a local guppy version with GPU, so does _not_ use Singularity, does _not_ use multiple servers ie. via SLURM
 # Run it on your GPU server only!
 
