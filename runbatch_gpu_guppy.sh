@@ -1,18 +1,11 @@
 #!/bin/bash
 # Colin Davenport, July 2020 -  June 2021
-# This version uses a local guppy version with GPU, so does not use Singularity or multiple servers ie. via SLURM
+# This version uses a local guppy version with GPU, so does _not_ use Singularity or multiple servers ie. via SLURM
 
-# Note - singularity does NOT work with sbatch, but does with srun. Therefore no additional sbatch script needed.
-# Now optionally uses Singularity - previously needed on our 20.04 cluster
-# Alternatively, you can use the native Guppy, as there is now a version for Ubuntu 20.04
 # This version uses config and models from bonito/rerio - see bottom
 # Usage: a) set parameters and paths
 # Usage: b) bash runbatch_gpu_guppy.sh input_fast5_dir
 
-
-# use Singularity container version of guppy
-# Optional: build Sing container from docker container with: singularity build guppy453.sif docker://genomicpariscentre/guppy
-#guppy_basecaller="singularity exec /mnt/ngsnfs/tools/guppy/guppy507.sif guppy_basecaller"
 
 # use standard guppy if desired
 guppy_basecaller=guppy_basecaller
