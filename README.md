@@ -2,14 +2,19 @@
 Splitting and accelerating the Oxford Nanopore CPU basecaller guppy using SLURM.
 These scripts move FAST5s into subdirectories, then run CPU guppy on each subdirectory independently using a SLURM cluster.
 
+Performance note on GPU vs CPU: important!
 
-Dr. Colin Davenport, June 2019 - Feb 2021
+Guppy is really slow on CPU, but incredibly quick on GPU (100-1000X faster on GPU!). After torturing our 1000+ core cluster for multiple days with CPU basecalling for MinION runs, we finally moved to a performant Nvidia GPU graphics card for basecalling. We use the script `runbatch_gpu_guppy.sh` for this. When using the GPU version, you want to have all your FAST5 files in a single directory, i.e. you do not need to run `bash batch_split_to_subdirs.sh` to split the FAST5 files into subdirectories.
 
-Warning: only tested on Ubuntu 16.04 and 20.04 to date. Guppy works fine on Ubuntu 20.04, use a singularity container.
+
+Dr. Colin Davenport, June 2019 - August 2021
+
+Warning: only tested on Ubuntu 16.04 and 20.04 to date (not Windows). Guppy works fine on Ubuntu 20.04, use a singularity container or the native version from ONT.
 
 Requirements
  * either a working guppy CPU guppy_basecaller (the command `guppy_basecaller` should provide output) 
  * or a singularity guppy CPU container with guppy_basecaller installed in it.
+ * or a Nvidia GPU with CUDA installed
 
 Howto: 
 
