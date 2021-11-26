@@ -16,7 +16,7 @@ Requirements
  * or a singularity guppy CPU container with guppy_basecaller installed in it.
  * or a Nvidia GPU with CUDA installed
 
-Howto: 
+Howto - CPU version: 
 
 1. Clone the repository
 
@@ -45,3 +45,6 @@ Howto:
 
 
 Done
+
+
+If you have any questions please raise an issue in this repository.
