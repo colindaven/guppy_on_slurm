@@ -49,7 +49,7 @@ nohup $guppy_barcoder -i $i -s $out_dir $barcode_params &
 
 
 
-# More settings
+# More settings (add to barcode_params above)
 
 #  --require_barcodes_both_ends    Reads will only be classified if there is a
 #                                  barcode above the min_score at both ends of
@@ -63,4 +63,4 @@ nohup $guppy_barcoder -i $i -s $out_dir $barcode_params &
 #                                  of the read.
 #  --min_score_mid_barcodes arg    Minimum score for a barcode to be detected in
 #                                  the middle of a read.
-
+#
