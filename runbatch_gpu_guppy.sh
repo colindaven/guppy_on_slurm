@@ -14,13 +14,6 @@
 #guppy_basecaller=guppy_basecaller
 guppy_basecaller="singularity exec /mnt/ngsnfs/tools/guppy/guppy601.sif guppy_basecaller"
 
-#barcoder
-guppy_barcoder="singularity exec /mnt/ngsnfs/tools/guppy/guppy601.sif guppy_barcoder"
-
-
-
-# Calibration ref (optional)
-#calref=../../../../lager2/rcug/seqres/contaminants/2020_02/ont_calib/DNA_CS.fasta
 
 # bonito rerio high accuracy models and configs
 # See bottom for all models
@@ -37,7 +30,6 @@ echo "Starting guppy on dir: "$i
 # for nvidia A100, 40GB ram
 #gpu_params='--compress_fastq --num_callers 14 --gpu_runners_per_device 8 --chunks_per_runner 512 --chunk_size 3000'
 gpu_params='--nv --compress_fastq --num_callers 14 --gpu_runners_per_device 8 --chunks_per_runner 512 --chunk_size 3000'
-barcode_params='--compress_fastq --barcode_kits "EXP-NBD104" --trim_barcodes'
 out_dir="guppy_out"
 
 #echo "DEBUG: " $guppy_basecaller
@@ -49,11 +41,8 @@ out_dir="guppy_out"
 ## WARNING - not tested with version 507 yet. Super accuracy available TODO
 
 # high accuracy, 7x + slower
-#nohup $guppy_basecaller -i $i -s $out_dir $gpu_params -x "cuda:0" -c $config -m $model &
+nohup $guppy_basecaller -i $i -s $out_dir $gpu_params -x "cuda:0" -c $config -m $model &
 
-
-# barcoder - CPU only, not GPU
-nohup $guppy_barcoder -i $i -s $out_dir $barcode_params -c $config -m $model &
 
 
 
