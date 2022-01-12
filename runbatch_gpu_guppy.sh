@@ -9,157 +9,83 @@
 # Usage: b) bash runbatch_gpu_guppy.sh input_fast5_dir
 
 
+# If the user doesn't supply any arguments then exit
+if [ $# -eq 0 ]; then
+    echo "Supply folder containing FAST5 files as argument"
+    exit 0
+fi
+
+fast5_input=$1
+
 
 # use standard guppy if desired
-#guppy_basecaller=guppy_basecaller
-guppy_basecaller="singularity exec /mnt/ngsnfs/tools/guppy/guppy601.sif guppy_basecaller"
+guppy_basecaller=guppy_basecaller
+#guppy_basecaller="singularity exec /mnt/ngsnfs/tools/guppy/guppy601.sif guppy_basecaller"
+
+
+
+# rerio super accuracy
+config=/mnt/ngsnfs/tools/guppy/rerio/basecall_models/res_dna_r9.4.1_e8.1_sup_v033.cfg
+model=/mnt/ngsnfs/tools/guppy/rerio/basecall_models/res_dna_r9.4.1_e8.1_sup_v033.jsn
 
 
 # bonito rerio high accuracy models and configs
 # See bottom for all models
-config=/mnt/ngsnfs/tools/guppy/rerio/basecall_models/res_dna_r941_min_dUhac.cfg
+#config=/mnt/ngsnfs/tools/guppy/rerio/basecall_models/res_dna_r941_min_dUhac.cfg
 #config=/mnt/ngsnfs/tools/guppy/rerio/basecall_models/res_dna_r9.4.1_e8.1_sup_v033
-#config=dna_r9.4.1_450bps_hac.cfg
-model=/mnt/ngsnfs/tools/guppy/rerio/basecall_models/res_dna_r941_min_dUhac.jsn
+#model=/mnt/ngsnfs/tools/guppy/rerio/basecall_models/res_dna_r941_min_dUhac.jsn
 
-# Use the first argument supplied on the command line for the input directory containing fast5 files.
-i=$1
 
-echo "Starting guppy on dir: "$i
+echo "Starting guppy on dir: " $fast5_input
 
 # for nvidia A100, 40GB ram
-#gpu_params='--compress_fastq --num_callers 14 --gpu_runners_per_device 8 --chunks_per_runner 512 --chunk_size 3000'
-gpu_params='--nv --compress_fastq --num_callers 14 --gpu_runners_per_device 8 --chunks_per_runner 512 --chunk_size 3000'
+gpu_params='--compress_fastq --num_callers 4 --gpu_runners_per_device 4 --chunks_per_runner 512 --chunk_size 3000'
+#gpu_params='--nv --compress_fastq --num_callers 14 --gpu_runners_per_device 8 --chunks_per_runner 512 --chunk_size 3000'
 out_dir="guppy_out"
 
 #echo "DEBUG: " $guppy_basecaller
 
 ##############
-# slow, higher accuracy mode
+# Run guppy
 ##############
 
-## WARNING - not tested with version 507 yet. Super accuracy available TODO
+rm nohup.out
 
 # high accuracy, 7x + slower
-nohup $guppy_basecaller -i $i -s $out_dir $gpu_params -x "cuda:0" -c $config -m $model &
+nohup $guppy_basecaller --input_path $fast5_input -s $out_dir $gpu_params -x "cuda:0" -c $config -m $model &
 
 
 
 
 # These are just examples for paths to models from rerio project on our filesystem
-#/mnt/ngsnfs/tools/guppy/rerio/basecall_models/res_dna_r103_min_crf_v030.cfg
-#/mnt/ngsnfs/tools/guppy/rerio/basecall_models/res_dna_r103_min_flipflop_v001.cfg
-#/mnt/ngsnfs/tools/guppy/rerio/basecall_models/res_dna_r103_prom_modbases_5mC_v001.cfg
-#/mnt/ngsnfs/tools/guppy/rerio/basecall_models/res_dna_r103_prom_rle_v001.cfg
-#/mnt/ngsnfs/tools/guppy/rerio/basecall_models/res_dna_r941_min_crf_v031.cfg
-#/mnt/ngsnfs/tools/guppy/rerio/basecall_models/res_dna_r941_min_dUfast.cfg
-#/mnt/ngsnfs/tools/guppy/rerio/basecall_models/res_dna_r941_min_dUhac.cfg
-#/mnt/ngsnfs/tools/guppy/rerio/basecall_models/res_dna_r941_min_flipflop_v001.cfg
-#/mnt/ngsnfs/tools/guppy/rerio/basecall_models/res_dna_r941_min_modbases_5mC_5hmC_CpG_v001.cfg
-#/mnt/ngsnfs/tools/guppy/rerio/basecall_models/res_dna_r941_min_modbases_5mC_5hmC_v001.cfg
-#/mnt/ngsnfs/tools/guppy/rerio/basecall_models/res_dna_r941_min_modbases_5mC_CpG_v001.cfg
-#/mnt/ngsnfs/tools/guppy/rerio/basecall_models/res_dna_r941_min_modbases_5mC_v001.cfg
-#/mnt/ngsnfs/tools/guppy/rerio/basecall_models/res_dna_r941_min_modbases-all-context_v001.cfg
-#/mnt/ngsnfs/tools/guppy/rerio/basecall_models/res_dna_r941_min_rle_v001.cfg
-#/mnt/ngsnfs/tools/guppy/rerio/basecall_models/res_dna_r941_prom_modbases_5mC_CpG_v001.cfg
-#/mnt/ngsnfs/tools/guppy/rerio/basecall_models/res_dna_r941_prom_modbases_5mC_v001.cfg
-#/mnt/ngsnfs/tools/guppy/rerio/basecall_models/res_rna2_r941_min_flipflop_v001.cfg
-
-
-#/mnt/ngsnfs/tools/guppy/rerio/basecall_models/adapter_scaling_dna_r10.3_prom.jsn
-#/mnt/ngsnfs/tools/guppy/rerio/basecall_models/adapter_scaling_dna_r9.4.1_min.jsn
-#/mnt/ngsnfs/tools/guppy/rerio/basecall_models/adapter_scaling_dna_r9.4.1_prom.jsn
-#/mnt/ngsnfs/tools/guppy/rerio/basecall_models/res_dna_r103_min_crf_v030.jsn
-#/mnt/ngsnfs/tools/guppy/rerio/basecall_models/res_dna_r103_min_flipflop_v001.jsn
-#/mnt/ngsnfs/tools/guppy/rerio/basecall_models/res_dna_r103_prom_modbases_5mC_v001.jsn
-#/mnt/ngsnfs/tools/guppy/rerio/basecall_models/res_dna_r103_prom_rle_v001.jsn
-#/mnt/ngsnfs/tools/guppy/rerio/basecall_models/res_dna_r941_min_crf_v031.jsn
-#/mnt/ngsnfs/tools/guppy/rerio/basecall_models/res_dna_r941_min_dUfast.jsn
-#/mnt/ngsnfs/tools/guppy/rerio/basecall_models/res_dna_r941_min_dUhac.jsn
-#/mnt/ngsnfs/tools/guppy/rerio/basecall_models/res_dna_r941_min_flipflop_v001.jsn
-#/mnt/ngsnfs/tools/guppy/rerio/basecall_models/res_dna_r941_min_modbases_5mC_5hmC_CpG_v001.jsn
-#/mnt/ngsnfs/tools/guppy/rerio/basecall_models/res_dna_r941_min_modbases_5mC_5hmC_v001.jsn
-#/mnt/ngsnfs/tools/guppy/rerio/basecall_models/res_dna_r941_min_modbases_5mC_CpG_v001.jsn
-#/mnt/ngsnfs/tools/guppy/rerio/basecall_models/res_dna_r941_min_modbases_5mC_v001.jsn
-#/mnt/ngsnfs/tools/guppy/rerio/basecall_models/res_dna_r941_min_modbases-all-context_v001.jsn
-#/mnt/ngsnfs/tools/guppy/rerio/basecall_models/res_dna_r941_min_rle_v001.jsn
-#/mnt/ngsnfs/tools/guppy/rerio/basecall_models/res_dna_r941_prom_modbases_5mC_CpG_v001.jsn
-#/mnt/ngsnfs/tools/guppy/rerio/basecall_models/res_dna_r941_prom_modbases_5mC_v001.jsn
-#/mnt/ngsnfs/tools/guppy/rerio/basecall_models/res_rna2_r941_min_flipflop_v001.jsn
-
-
-#ls -1 /mnt/ngsnfs/tools/guppy/rerio/basecall_models/
-#adapter_scaling_dna_r10.3_prom.jsn
-#adapter_scaling_dna_r9.4.1_min.jsn
-#adapter_scaling_dna_r9.4.1_prom.jsn
-#barcoding
-#res_dna_r103_min_crf_v030
+# in /mnt/ngsnfs/tools/guppy/rerio/basecall_models/
 #res_dna_r103_min_crf_v030.cfg
-#res_dna_r103_min_crf_v030.jsn
-#res_dna_r103_min_crf_v032
 #res_dna_r103_min_crf_v032.cfg
-#res_dna_r103_min_crf_v032.jsn
-#res_dna_r103_min_flipflop_v001
 #res_dna_r103_min_flipflop_v001.cfg
-#res_dna_r103_min_flipflop_v001.jsn
-#res_dna_r103_prom_modbases_5mC_v001
 #res_dna_r103_prom_modbases_5mC_v001.cfg
-#res_dna_r103_prom_modbases_5mC_v001.checkpoint
-#res_dna_r103_prom_modbases_5mC_v001.jsn
-#res_dna_r103_prom_rle_v001
 #res_dna_r103_prom_rle_v001.cfg
-#res_dna_r103_prom_rle_v001.jsn
-#res_dna_r103_q20ea_crf_v033
 #res_dna_r103_q20ea_crf_v033.cfg
-#res_dna_r103_q20ea_crf_v033.jsn
-#res_dna_r103_q20ea_crf_v034
 #res_dna_r103_q20ea_crf_v034.cfg
-#res_dna_r103_q20ea_crf_v034.jsn
-#res_dna_r9.4.1_e8.1_fast_v033
-#res_dna_r9.4.1_e8.1_hac_v033
-#res_dna_r9.4.1_e8.1_sup_v033
-#res_dna_r941_min_crf_v031
+#res_dna_r9.4.1_e8.1_sup_v033.cfg
 #res_dna_r941_min_crf_v031.cfg
-#res_dna_r941_min_crf_v031.jsn
-#res_dna_r941_min_crf_v032
 #res_dna_r941_min_crf_v032.cfg
-#res_dna_r941_min_crf_v032.jsn
 #res_dna_r941_min_dUfast.cfg
-#res_dna_r941_min_dUfast.jsn
-#res_dna_r941_min_dUfast_v001
 #res_dna_r941_min_dUhac.cfg
-#res_dna_r941_min_dUhac.jsn
-#res_dna_r941_min_dUhac_v001
-#res_dna_r941_min_flipflop_v001
 #res_dna_r941_min_flipflop_v001.cfg
-#res_dna_r941_min_flipflop_v001.jsn
-#res_dna_r941_min_modbases_5mC_5hmC_CpG_v001
 #res_dna_r941_min_modbases_5mC_5hmC_CpG_v001.cfg
-#res_dna_r941_min_modbases_5mC_5hmC_CpG_v001.jsn
-#res_dna_r941_min_modbases_5mC_5hmC_v001
 #res_dna_r941_min_modbases_5mC_5hmC_v001.cfg
-#res_dna_r941_min_modbases_5mC_5hmC_v001.checkpoint
-#res_dna_r941_min_modbases_5mC_5hmC_v001.jsn
-#res_dna_r941_min_modbases_5mC_CpG_v001
 #res_dna_r941_min_modbases_5mC_CpG_v001.cfg
-#res_dna_r941_min_modbases_5mC_CpG_v001.jsn
-#res_dna_r941_min_modbases_5mC_v001
 #res_dna_r941_min_modbases_5mC_v001.cfg
-#res_dna_r941_min_modbases_5mC_v001.checkpoint
-#res_dna_r941_min_modbases_5mC_v001.jsn
-#res_dna_r941_min_modbases-all-context_v001
 #res_dna_r941_min_modbases-all-context_v001.cfg
-#res_dna_r941_min_modbases-all-context_v001.jsn
-#res_dna_r941_min_rle_v001
 #res_dna_r941_min_rle_v001.cfg
-#res_dna_r941_min_rle_v001.jsn
-#res_dna_r941_prom_modbases_5mC_CpG_v001
 #res_dna_r941_prom_modbases_5mC_CpG_v001.cfg
-#res_dna_r941_prom_modbases_5mC_CpG_v001.jsn
-#res_dna_r941_prom_modbases_5mC_v001
 #res_dna_r941_prom_modbases_5mC_v001.cfg
-#res_dna_r941_prom_modbases_5mC_v001.checkpoint
-#res_dna_r941_prom_modbases_5mC_v001.jsn
-#res_rna2_r941_min_flipflop_v001
 #res_rna2_r941_min_flipflop_v001.cfg
-#res_rna2_r941_min_flipflop_v001.jsn
+
+
+
+
+
+
+
+
