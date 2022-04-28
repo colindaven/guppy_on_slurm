@@ -41,7 +41,7 @@ Howto - CPU version:
   find exec cat. Warning - needs to write output into a directory above the find, eg 
   using ../x.fastq for the output file, otherwise creates an infinite loop. 
   
-  `srun find *.guppy/pass -name "*.fastq" -exec cat {} > ../guppy_part1.fastq \; &`
+  `srun find *.guppy/pass -name "*.fastq.gz" -exec cat {} > ../guppy_part1.fastq.gz \; &`
 
 
 Done
