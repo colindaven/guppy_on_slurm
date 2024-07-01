@@ -1,15 +1,16 @@
 # guppy_on_slurm
 
-### March 2024 - only use the Guppy basecaller if you really need to. Guppy has been replaced by the Dorado basecaller by Oxford Nanopore.
+### March 2024 - only use the Guppy basecaller if you really need to. Guppy has been replaced by the Dorado basecaller by Oxford Nanopore. Dorado is recommended since it produces higher-accuracy basecalls.
 
 ## Splitting and accelerating the Oxford Nanopore CPU basecaller guppy using SLURM.
+The motivation behind this (now-outdated) project was to speed up the Guppy basecaller when running on CPU only - we didn't have proper GPUs in the Slurm HPC cluster back then. We then got nice A100 GPUs so could use the GPU guppy script `runbatch_gpu_guppy.sh`. These days we only use the Dorado basecaller from ONT, not Guppy. If using CPU based guppy on SLURM for some reason, I would not run this on any big data (i.e. Minion scale data is probably going to be the limit, unless you are really, really patient). 
+
+## How does the CPU script version work ?
 These scripts move FAST5s into subdirectories, then run CPU guppy on each subdirectory independently using a SLURM cluster.
 
 ## Performance note on GPU vs CPU: important!
 
 Guppy is really slow on CPU, but incredibly quick on GPU (100-1000X faster on GPU!). After torturing our 1000+ core cluster for multiple days with CPU basecalling for MinION runs, we finally moved to a performant Nvidia GPU graphics card for basecalling. We use the script `runbatch_gpu_guppy.sh` for this. When using the GPU version, you want to have all your FAST5 files in a single directory, i.e. you do not need to run `bash batch_split_to_subdirs.sh` to split the FAST5 files into subdirectories.
-
-Dr. Colin Davenport, June 2019 - August 2021
 
 ### Warning: only tested on Ubuntu 16.04 and 20.04 to date (not Windows). Guppy works fine on Ubuntu 20.04, use a singularity container or the native version from ONT.
 
@@ -51,3 +52,6 @@ Done
 
 
 If you have any questions please raise an issue in this repository.
+
+
+
